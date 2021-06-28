@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -30,11 +31,6 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     List<Tweet> tweets;
     TweetsAdapter adapter;
-
-    public void onLogoutButton(View view) {
-        client.clearAccessToken(); // forget who's logged in
-        finish(); // navigate backwards to Login screen
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +65,13 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == R.id.compose){
-
+            Intent intent = new Intent(this, ComposeActivity.class);
+            startActivity(intent);
             return true;
+        }
+        else if(item.getItemId() == R.id.logout){
+            client.clearAccessToken(); // forget who's logged in
+            finish(); // navigate backwards to Login screen
         }
         return super.onOptionsItemSelected(item);
     }
