@@ -70,18 +70,22 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvBody;
         TextView tvScreenName;
         TextView tvHandler;
+        TextView tvTime;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
             tvBody = itemView.findViewById(R.id.tvBody);
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvHandler = itemView.findViewById(R.id.tvHandler);
+            tvTime = itemView.findViewById(R.id.tvTime);
         }
 
         public void bind(Tweet tweet) {
+            ParseRelativeDate prd = new ParseRelativeDate();
             tvBody.setText(tweet.body);
             tvScreenName.setText(tweet.user.name);
             tvHandler.setText("@"+tweet.user.screenName);
+            tvTime.setText(" · " + prd.getRelativeTimeAgo(tweet.createdAt));
 
             int radius = 60; // corner radius, higher value = more rounded
             int margin = 10; // crop margin, set to 0 for corners with no crop
