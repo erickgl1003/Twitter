@@ -21,6 +21,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder>{
 
+
     Context context;
     List<Tweet> tweets;
     //Bind values based on position of the element
@@ -54,12 +55,17 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     public int getItemCount() {
         return tweets.size();
     }
+    // Clean all elements of the recycler
+    public void clear() {
+        tweets.clear();
+        notifyDataSetChanged();
+    }
 
-    //Pass in context and a list of tweets
-
-
-
-
+    // Add a list of items -- change to type used
+    public void addAll(List<Tweet> list) {
+        tweets.addAll(list);
+        notifyDataSetChanged();
+    }
 
 
 
@@ -67,6 +73,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
     //Define a viewholder
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView ivProfileImage;
+        ImageView ivMedia;
         TextView tvBody;
         TextView tvScreenName;
         TextView tvHandler;
@@ -78,6 +85,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName = itemView.findViewById(R.id.tvScreenName);
             tvHandler = itemView.findViewById(R.id.tvHandler);
             tvTime = itemView.findViewById(R.id.tvTime);
+            ivMedia = itemView.findViewById(R.id.ivMedia);
         }
 
         public void bind(Tweet tweet) {
@@ -87,9 +95,19 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvHandler.setText("@"+tweet.user.screenName);
             tvTime.setText(" · " + prd.getRelativeTimeAgo(tweet.createdAt));
 
+
             int radius = 60; // corner radius, higher value = more rounded
             int margin = 10; // crop margin, set to 0 for corners with no crop
             Glide.with(context).load(tweet.user.profileImageUrl).centerCrop().transform(new RoundedCornersTransformation(radius, margin)).into(ivProfileImage);
+            if(tweet.media != ""){
+                radius = 30;
+                margin = 10;
+                ivMedia.setVisibility(View.VISIBLE);
+                Glide.with(context).load(tweet.media).centerCrop().transform(new RoundedCornersTransformation(radius, margin)).into(ivMedia);
+            }
+            else{
+                ivMedia.setVisibility(View.GONE);
+            }
         }
     }
 }

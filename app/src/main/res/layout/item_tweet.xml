@@ -64,4 +64,17 @@
         android:layout_toEndOf="@+id/tvHandler"
         android:textSize="15sp"
         tools:text="5m" />
+
+    <ImageView
+        android:id="@+id/ivMedia"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_centerHorizontal="true"
+
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:scaleType="center"
+        android:visibility="gone"
+        tools:srcCompat="@tools:sample/avatars" />
 </RelativeLayout>
