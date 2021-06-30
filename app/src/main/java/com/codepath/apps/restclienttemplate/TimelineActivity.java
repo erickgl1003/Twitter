@@ -44,15 +44,18 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo_white2);// set drawable icon
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                showProgressBar();
                 // Your code to refresh the list here.
                 // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
@@ -80,6 +83,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         rvTweets.setAdapter(adapter);
 
         populateHomeTimeline();
+
     }
     public void fetchTimelineAsync(int page) {
         // Send the network request to fetch the updated data
@@ -96,6 +100,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
                     Log.i(TAG,jsonArray.toString());
                     tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     adapter.notifyDataSetChanged();
+                    hideProgressBar();
 
                 } catch (JSONException e) {
                     Log.e(TAG,"Json exception",e);
@@ -111,6 +116,25 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
             }
 
         });
+    }
+    MenuItem miActionProgressItem;
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        showProgressBar();
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 
     // Inflate the menu; this adds items to the action bar if it is present.
@@ -143,6 +167,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
             //Update the adapter
             adapter.notifyItemInserted(0);
             rvTweets.smoothScrollToPosition(0);
+            hideProgressBar();
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -157,6 +182,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
                 try {
                     tweets.addAll(Tweet.fromJsonArray(jsonArray));
                     adapter.notifyDataSetChanged();
+                    hideProgressBar();
                 } catch (JSONException e) {
                     Log.e(TAG,"Json exception",e);
                     e.printStackTrace();
@@ -180,11 +206,13 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
     }
 
 
+
     @Override
     public void onFinishEditDialog(Tweet tweet) {
         tweets.add(0,tweet);
         //Update the adapter
         adapter.notifyItemInserted(0);
         rvTweets.smoothScrollToPosition(0);
+        hideProgressBar();
     }
 }

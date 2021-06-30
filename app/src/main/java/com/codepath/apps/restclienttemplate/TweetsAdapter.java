@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,6 +79,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvScreenName;
         TextView tvHandler;
         TextView tvTime;
+        TextView tvLikes;
+        ImageButton btnLike;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivProfileImage = itemView.findViewById(R.id.ivProfileImage);
@@ -86,6 +89,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvHandler = itemView.findViewById(R.id.tvHandler);
             tvTime = itemView.findViewById(R.id.tvTime);
             ivMedia = itemView.findViewById(R.id.ivMedia);
+            tvLikes = itemView.findViewById(R.id.tvLikes);
+            btnLike = itemView.findViewById(R.id.btnLike);
         }
 
         public void bind(Tweet tweet) {
@@ -94,6 +99,12 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText(tweet.user.name);
             tvHandler.setText("@"+tweet.user.screenName);
             tvTime.setText(" · " + prd.getRelativeTimeAgo(tweet.createdAt));
+            if(Integer.parseInt(tweet.likes) > 0)
+                tvLikes.setText(tweet.likes);
+
+            if(tweet.liked == true){
+                btnLike.setImageResource(R.drawable.ic_vector_heart);
+            }
 
 
             int radius = 60; // corner radius, higher value = more rounded
@@ -110,4 +121,5 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             }
         }
     }
+
 }

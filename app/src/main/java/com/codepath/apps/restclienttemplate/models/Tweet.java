@@ -16,6 +16,8 @@ public class Tweet {
     public String createdAt;
     public User user;
     public String media = "";
+    public String likes;
+    public Boolean liked = false;
 
     public Tweet(){ }
 
@@ -24,6 +26,8 @@ public class Tweet {
         tweet.body = jsonObject.getString("text");
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
+        tweet.likes = jsonObject.getString("favorite_count");
+        tweet.liked = jsonObject.getBoolean("favorited");
         try{
             JSONArray media = jsonObject.getJSONObject("entities").getJSONArray("media");
             Log.i(TAG,media.toString());
