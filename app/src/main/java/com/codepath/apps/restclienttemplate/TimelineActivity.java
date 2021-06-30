@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.codepath.apps.restclienttemplate.models.ComposeFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -26,7 +28,7 @@ import java.util.List;
 
 import okhttp3.Headers;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements ComposeFragment.EditNameDialogListener {
 
 
     public static final String TAG=  "TimelineActivity";
@@ -42,6 +44,9 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo_white2);// set drawable icon
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -118,12 +123,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if(item.getItemId() == R.id.compose){
-            Intent intent = new Intent(this, ComposeActivity.class);
-            startActivityForResult(intent, REQUEST_CODE);
-            return true;
-        }
-        else if(item.getItemId() == R.id.logout){
+        if(item.getItemId() == R.id.logout){
             client.clearAccessToken(); // forget who's logged in
             finish(); // navigate backwards to Login screen
         }
@@ -169,5 +169,22 @@ public class TimelineActivity extends AppCompatActivity {
 
             }
         });
+    }
+    public void compose(View view) {
+
+        FragmentManager fr = getSupportFragmentManager();
+        ComposeFragment frag = ComposeFragment.newInstance();
+        frag.show(fr,"ComposeFragment");
+        //Intent intent = new Intent(this, ComposeActivity.class);
+        //startActivityForResult(frag, REQUEST_CODE);
+    }
+
+
+    @Override
+    public void onFinishEditDialog(Tweet tweet) {
+        tweets.add(0,tweet);
+        //Update the adapter
+        adapter.notifyItemInserted(0);
+        rvTweets.smoothScrollToPosition(0);
     }
 }

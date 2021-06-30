@@ -29,6 +29,9 @@ public class ComposeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.logo_white2);// set drawable icon
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         client = TwitterApp.getRestClient(this);
 

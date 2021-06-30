@@ -3,21 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/compose"
-        android:icon="@drawable/ic_vector_compose"
-        android:title="Compose"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/logout"
-        android:icon="@android:drawable/ic_menu_revert"
+        android:icon="@drawable/ic_vector_close"
         android:title="logout"
+        app:iconTint="@color/colorAccent"
+        android:iconTint="@android:color/white"
+
         app:showAsAction="always" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/twitter_blue"
-        app:srcCompat="@drawable/vector_compose_fab"/>
 </menu>
