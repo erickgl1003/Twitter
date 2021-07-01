@@ -33,6 +33,8 @@ public class ComposeFragment extends DialogFragment  {
     EditText etCompose;
     Button btnTweet;
     TwitterClient client;
+    String username = "";
+    String id = "";
 
     public ComposeFragment(){}
 
@@ -44,6 +46,9 @@ public class ComposeFragment extends DialogFragment  {
         ComposeFragment frag = new ComposeFragment();
         return frag;
     }
+
+
+
 
     @Nullable
     @org.jetbrains.annotations.Nullable
@@ -61,6 +66,13 @@ public class ComposeFragment extends DialogFragment  {
         etCompose = view.findViewById(R.id.etCompose);
         btnTweet = view.findViewById(R.id.btnTweet);
 
+        if (getArguments() != null) {
+            username = getArguments().getString("username");
+            id = getArguments().getString("id");
+            etCompose.setText("@"+ username+ " ");
+
+        }
+
         //Set a onClickListener on the button
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +87,8 @@ public class ComposeFragment extends DialogFragment  {
                     return;
                 }
                 //Make an API call to Twitter to publish the tweet
-                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
+
+                client.publishTweet(tweetContent, id, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         try {

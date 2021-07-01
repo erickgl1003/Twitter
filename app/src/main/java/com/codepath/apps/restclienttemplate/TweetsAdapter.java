@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.restclienttemplate.models.ComposeFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
@@ -90,6 +94,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
         TextView tvTime;
         TextView tvLikes;
         ImageButton btnLike;
+        ImageButton btnComment;
         ImageButton btnRt;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -102,6 +107,7 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvLikes = itemView.findViewById(R.id.tvLikes);
             btnLike = itemView.findViewById(R.id.btnLike);
             btnRt = itemView.findViewById(R.id.btnRt);
+            btnComment = itemView.findViewById(R.id.btnComment);
         }
 
         public void bind(final Tweet tweet) {
@@ -110,6 +116,8 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText(tweet.user.name);
             tvHandler.setText("@"+tweet.user.screenName);
             tvTime.setText(" · " + prd.getRelativeTimeAgo(tweet.createdAt));
+
+
             if(Integer.parseInt(tweet.likes) > 0)
                 tvLikes.setText(tweet.likes);
             else tvLikes.setText("");
@@ -133,6 +141,21 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
                 btnRt.setClickable(true);
             }
 
+
+
+            btnComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fr = ((AppCompatActivity)context).getSupportFragmentManager();
+                    //tweet.user.screenName,Integer.parseInt(tweet.id)
+                    Bundle bundle = new Bundle();
+                    bundle.putString("username",tweet.user.screenName);
+                    bundle.putString("id",tweet.id);
+                    ComposeFragment frag = ComposeFragment.newInstance();
+                    frag.setArguments(bundle);
+                    frag.show(fr,"ComposeFragment");
+                }
+            });
 
             btnRt.setOnClickListener(new View.OnClickListener() {
                 TwitterClient client = TwitterApp.getRestClient(context);

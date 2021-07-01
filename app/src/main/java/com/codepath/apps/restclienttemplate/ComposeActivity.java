@@ -19,6 +19,7 @@ import org.parceler.Parcels;
 import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
+    //Actually unused but kept it for reference!
 
     public static final int MAX_TWEET_LENGTH = 140;
     EditText etCompose;
@@ -51,8 +52,9 @@ public class ComposeActivity extends AppCompatActivity {
                     Toast.makeText(ComposeActivity.this,"Keep it short!",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                String id = "";
                 //Make an API call to Twitter to publish the tweet
-                client.publishTweet(tweetContent, new JsonHttpResponseHandler() {
+                client.publishTweet(tweetContent, id, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Headers headers, JSON json) {
                         try {

@@ -150,6 +150,7 @@ public class TimelineActivity extends AppCompatActivity implements ComposeFragme
         if(item.getItemId() == R.id.logout){
             client.clearAccessToken(); // forget who's logged in
             finish(); // navigate backwards to Login screen
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
