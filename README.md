@@ -25,8 +25,8 @@ The following **optional** features are implemented:
 
 * [X] User is using **"Twitter branded" colors and styles**
 * [X] User sees an **indeterminate progress indicator** when any background or network task is happening
-* [ ] User can **select "reply" from home timeline to respond to a tweet**
-  * [ ] User that wrote the original tweet is **automatically "@" replied in compose**
+* [X] User can **select "reply" from home timeline to respond to a tweet**
+  * [X] User that wrote the original tweet is **automatically "@" replied in compose**
 * [ ] User can tap a tweet to **open a detailed tweet view**
   * [X] User can **take favorite (and unfavorite) or retweet** actions on a tweet
 * [ ] User can view more tweets as they scroll with infinite pagination
@@ -49,7 +49,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/erickgl1003/Twitter/blob/master/DemoFinal.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/erickgl1003/Twitter/blob/master/FinalDemo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [Kap](https://getkap.co/).
 
