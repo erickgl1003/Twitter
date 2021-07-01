@@ -18,6 +18,8 @@ public class Tweet {
     public String media = "";
     public String likes;
     public Boolean liked = false;
+    public Boolean rt = false;
+    public String id;
 
     public Tweet(){ }
 
@@ -28,6 +30,8 @@ public class Tweet {
         tweet.user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.likes = jsonObject.getString("favorite_count");
         tweet.liked = jsonObject.getBoolean("favorited");
+        tweet.id = jsonObject.getString("id_str");
+        tweet.rt = jsonObject.getBoolean("retweeted");
         try{
             JSONArray media = jsonObject.getJSONObject("entities").getJSONArray("media");
             Log.i(TAG,media.toString());
