@@ -1,6 +1,6 @@
 # Project 3 - *Simple Twitter*
 
-**Simple Twitter* is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
+**Simple Twitter** is an android app that allows a user to view their Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
 Time spent: **12** hours spent in total
 
@@ -40,7 +40,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-* [X] Both like and retweet functions works on the main Timeline, without needing to switch to a deait view of every tweet.
+* [X] Both like and retweet functions works on the main Timeline, without needing to switch to a detail view of every tweet.
 * [X] Compose tweet button is located in a Floating Action Button
 * [X] Floating Action Button disappears when scrolling down and reappears when scrolling up!
 * [X] Like counter for every tweet added
